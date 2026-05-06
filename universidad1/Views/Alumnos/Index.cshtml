@@ -1,0 +1,44 @@
+﻿@model List<universidad1.Models.Alumno>
+
+@{
+    ViewData["Title"] = "Lista de Alumnos";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Alumnos Inscritos</h2>
+        <a asp-action="Create" class="btn btn-success">Registrar Nuevo</a>
+    </div>
+    <hr />
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Matrícula</th>
+                <th>Nombre Completo</th>
+                <th>Correo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No hay alumnos registrados.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var alumno in Model)
+                {
+                    <tr>
+                        <td>@alumno.Id</td>
+                        <td>@alumno.Matricula</td>
+                        <td>@alumno.NombreCompleto</td>
+                        <td>@alumno.Correo</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
