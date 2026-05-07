@@ -2,13 +2,14 @@
 {
     public class Horario
     {
-        // Usamos el ID del grupo para poder abrir la ventana flotante correcta
+        public int Id { get; set; }
         public int GrupoId { get; set; }
-        public string? ClaveGrupo { get; set; }
-        public string? NombreMateria { get; set; }
-        public string? NombreProfesor { get; set; }
+        public int AulaId { get; set; }
+        public string? DiaSemana { get; set; }
+        public TimeSpan HoraInicio { get; set; }
+        public TimeSpan HoraFin { get; set; }
 
-        // Aquí guardaremos todos los días juntos separados por una barra "|"
-        public string? DiasYHoras { get; set; }
+        public string? ClaveGrupo { get; set; }
+        public string? CodigoAula { get; set; }
     }
 }

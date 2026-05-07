@@ -20,7 +20,6 @@ namespace universidad1.Controllers
             using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
             {
                 conexion.Open();
-                // Ponemos los nombres EXACTOS de tu base de datos
                 string query = "SELECT id, codigo_aula, edificio, capacidad_alumnos, tipo_aula FROM Aulas";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conexion))
@@ -43,6 +42,35 @@ namespace universidad1.Controllers
             }
 
             return View(lista);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Aula aula)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
+            {
+                conexion.Open();
+
+                string query = @"INSERT INTO Aulas (codigo_aula, edificio, capacidad_alumnos, tipo_aula) 
+                                 VALUES (@codigo, @edificio, @capacidad, @tipo)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@codigo", aula.CodigoAula);
+                    cmd.Parameters.AddWithValue("@edificio", aula.Edificio);
+                    cmd.Parameters.AddWithValue("@capacidad", aula.Capacidad);
+
+                    cmd.Parameters.AddWithValue("@tipo", string.IsNullOrEmpty(aula.TipoAula) ? (object)DBNull.Value : aula.TipoAula);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

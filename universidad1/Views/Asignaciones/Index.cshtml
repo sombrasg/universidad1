@@ -1,0 +1,32 @@
+﻿@model List<universidad1.Models.AsignacionAlumnoGrupo>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listas de Grupos</h2>
+        <a asp-action="Create" class="btn btn-primary">Asignar Nuevo Alumno</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow-sm bg-white align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Matrícula</th>
+                    <th>Alumno</th>
+                    <th>Grupo</th>
+                    <th>Materia Impartida</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><span class="badge bg-secondary">@item.Matricula</span></td>
+                        <td><strong>@item.NombreAlumno</strong></td>
+                        <td>@item.ClaveGrupo</td>
+                        <td>@item.NombreMateria</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

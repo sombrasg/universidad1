@@ -1,44 +1,39 @@
-﻿@model List<universidad1.Models.CalificacionViewModel>
-
-@{
-    ViewData["Title"] = "Calificaciones";
-}
+﻿@model List<universidad1.Models.Calificacion>
 
 <div class="container mt-4">
-    <h2>Registro de Calificaciones</h2>
-    <hr />
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Actas de Calificaciones</h2>
+        <a asp-action="Create" class="btn btn-success">+ Nueva Calificación</a>
+    </div>
 
-    <table class="table table-striped table-hover">
+    <table class="table table-hover shadow-sm">
         <thead class="table-dark">
             <tr>
-                <th>ID Reg.</th>
-                <th class="text-warning">Nombre del Alumno (INNER JOIN)</th>
-                <th>Grupo ID</th>
-                <th>Parcial 1</th>
-                <th>Parcial 2</th>
+                <th>Alumno</th>
+                <th>Materia</th>
+                <th>Grupo</th>
+                <th>P1</th>
+                <th>P2</th>
                 <th>Promedio</th>
                 <th>Estatus</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model == null || !Model.Any())
+            @foreach (var c in Model)
             {
-                <tr><td colspan="7" class="text-center">No hay calificaciones registradas.</td></tr>
-            }
-            else
-            {
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td><strong>@item.NombreAlumno</strong></td>
-                        <td>@item.NombreMateria</td>
-                        <td>@item.Parcial1</td>
-                        <td>@item.Parcial2</td>
-                        <td>@item.PromedioFinal</td>
-                        <td>@item.EstatusAprobacion</td>
-                    </tr>
-                }
+                <tr>
+                    <td>@c.NombreAlumno</td>
+                    <td>@c.NombreMateria</td>
+                    <td><span class="badge bg-secondary">@c.ClaveGrupo</span></td>
+                    <td>@c.Parcial1</td>
+                    <td>@c.Parcial2</td>
+                    <td class="fw-bold">@c.PromedioFinal</td>
+                    <td>
+                        <span class="badge @(c.EstatusAprobacion == "Aprobado" ? "bg-success" : "bg-danger")">
+                            @c.EstatusAprobacion
+                        </span>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

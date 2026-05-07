@@ -1,0 +1,85 @@
+﻿@model universidad1.Models.Materia
+
+@{
+    ViewData["Title"] = "Registrar Nueva Materia";
+}
+
+<div class="container mt-4">
+    <h2>Registrar Nueva Materia</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+                
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Clave de la Materia</label>
+                        <input asp-for="Clave" class="form-control" required placeholder="Ej: MAT-101" />
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label">Nombre de la Materia</label>
+                        <input asp-for="NombreMateria" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Créditos</label>
+                        <select asp-for="Creditos" class="form-select" required>
+                            <option value="">-- Seleccione --</option>
+                            @for (int i = 1; i <= 20; i++)
+                            {
+                                <option value="@i">@i Créditos</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Horas Teóricas</label>
+                        <select asp-for="HorasTeoricas" class="form-select" required>
+                            <option value="">-- Seleccione --</option>
+                            @for (int i = 0; i <= 10; i++)
+                            {
+                                <option value="@i">@i Horas</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Horas Prácticas</label>
+                        <select asp-for="HorasPracticas" class="form-select" required>
+                            <option value="">-- Seleccione --</option>
+                            @for (int i = 0; i <= 10; i++)
+                            {
+                                <option value="@i">@i Horas</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Semestre Sugerido</label>
+                        <select asp-for="SemestreSugerido" class="form-select" required>
+                            <option value="">-- Seleccione --</option>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                <option value="@i">Semestre @i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Carrera a la que pertenece</label>
+                        <select asp-for="CarreraId" class="form-select" asp-items="ViewBag.Carreras" required>
+                            <option value="">-- Seleccione una Carrera --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Guardar Materia</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

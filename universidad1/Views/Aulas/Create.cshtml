@@ -1,0 +1,66 @@
+﻿@model universidad1.Models.Aula
+
+@{
+    ViewData["Title"] = "Registrar Nueva Aula";
+}
+
+<div class="container mt-4">
+    <h2>Registrar Nueva Instalación</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post" class="shadow-sm p-4 border rounded bg-light">
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Código de Aula</label>
+                        <input asp-for="CodigoAula" class="form-control border-primary" required placeholder="Ej: A-101, Lab-2" />
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Capacidad (Alumnos)</label>
+                        <select asp-for="Capacidad" class="form-select border-primary" required>
+                            <option value="">-- Seleccione --</option>
+                            @for (int i = 10; i <= 50; i += 5)
+                            {
+                                <option value="@i">@i Alumnos</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Edificio</label>
+                        <select asp-for="Edificio" class="form-select border-primary" required>
+                            <option value="">-- Seleccione Edificio --</option>
+                            <option value="Edificio A">Edificio A (Ciencias Básicas)</option>
+                            <option value="Edificio B">Edificio B (Sistemas y Computación)</option>
+                            <option value="Edificio C">Edificio C (Administrativo)</option>
+                            <option value="Edificio D">Edificio D (Laboratorios)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Tipo de Instalación</label>
+                        <select asp-for="TipoAula" class="form-select border-primary" required>
+                            <option value="">-- Seleccione Tipo --</option>
+                            <option value="Salón de clases regular">Salón de clases regular</option>
+                            <option value="Laboratorio de Computo">Laboratorio de Cómputo</option>
+                            <option value="Auditorio">Auditorio</option>
+                            <option value="Taller Quirúrgico">Taller Quirúrgico</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <a asp-action="Index" class="btn btn-secondary me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Guardar Aula
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -5,21 +5,27 @@
 }
 
 <div class="container mt-4">
-    <h2>Ciclos y Periodos Académicos</h2>
+    <h2>Gestión de Periodos Académicos</h2>
     <hr />
 
-    <table class="table table-striped table-hover align-middle">
+    <div class="mb-3 mt-3 text-end">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-calendar-plus"></i> Aperturar Nuevo Periodo
+        </a>
+    </div>
+
+    <table class="table table-striped table-hover shadow-sm align-middle">
         <thead class="table-dark">
             <tr>
-                <th>ID</th>
-                <th class="text-info">Clave del Periodo</th>
+                <th>Clave del Periodo</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha de Fin</th>
-                <th>Estatus</th>
+                <th class="text-center">Estatus</th>
+                <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model == null || Model.Count == 0)
+            @if (Model == null || !Model.Any())
             {
                 <tr><td colspan="5" class="text-center">No hay periodos registrados.</td></tr>
             }
@@ -28,24 +34,23 @@
                 @foreach (var periodo in Model)
                 {
                     <tr>
-                        <td>@periodo.Id</td>
                         <td><strong>@periodo.ClavePeriodo</strong></td>
-                        <td>@periodo.FechaInicio.ToString("dd/MMM/yyyy")</td>
-                        <td>@periodo.FechaFin.ToString("dd/MMM/yyyy")</td>
-                        <td>
-                            @* Lógica de negocio inteligente para evaluar el estatus *@
-                            @if (periodo.EstatusActivo)
+                        <td>@periodo.FechaInicio.ToString("dd/MM/yyyy")</td>
+                        <td>@periodo.FechaFin.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">
+                            @if (periodo.Activo)
                             {
-                                <span class="badge bg-success">En Curso / Activo</span>
-                            }
-                            else if (periodo.FechaInicio > DateTime.Now)
-                            {
-                                <span class="badge bg-info text-dark">Próximo</span>
+                                <span class="badge bg-success">Activo (En curso)</span>
                             }
                             else
                             {
-                                <span class="badge bg-secondary">Finalizado</span>
+                                <span class="badge bg-secondary">Inactivo (Cerrado)</span>
                             }
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@periodo.Id" class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
                         </td>
                     </tr>
                 }

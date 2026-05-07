@@ -1,0 +1,41 @@
+﻿@model universidad1.Models.Horario
+
+<div class="container mt-4">
+    <h2>Registrar Nuevo Horario</h2>
+    <form asp-action="Create" method="post" class="p-4 border rounded bg-light shadow-sm">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Grupo</label>
+                <select asp-for="GrupoId" asp-items="ViewBag.Grupos" class="form-select" required></select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Aula</label>
+                <select asp-for="AulaId" asp-items="ViewBag.Aulas" class="form-select" required></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Día</label>
+                <select asp-for="DiaSemana" class="form-select">
+                    <option>Lunes</option>
+                    <option>Martes</option>
+                    <option>Miércoles</option>
+                    <option>Jueves</option>
+                    <option>Viernes</option>
+                    <option>Sábado</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Hora Inicio</label>
+                <input asp-for="HoraInicio" type="time" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Hora Fin</label>
+                <input asp-for="HoraFin" type="time" class="form-control" required />
+            </div>
+        </div>
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar Horario</button>
+        </div>
+    </form>
+</div>

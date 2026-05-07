@@ -1,0 +1,76 @@
+﻿@model universidad1.Models.Asistencia
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0"><i class="bi bi-calendar-check"></i> Registro de Asistencia</h4>
+        </div>
+        <div class="card-body bg-light">
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Fecha de Clase</label>
+                        <input asp-for="Fecha" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label fw-bold">Seleccionar Grupo</label>
+                        <select asp-for="GrupoId" id="selGrupo" asp-items="ViewBag.Grupos" class="form-select border-danger" required>
+                            <option value="">-- Elija el grupo para ver alumnos --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Alumno</label>
+                        <select asp-for="AlumnoId" id="selAlumno" class="form-select" required disabled>
+                            <option value="">-- Primero elija un grupo --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Estado</label>
+                        <select asp-for="Estado" class="form-select" required>
+                            <option value="Presente">Presente</option>
+                            <option value="Ausente">Ausente</option>
+                            <option value="Retardo">Retardo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Observaciones (Opcional)</label>
+                    <textarea asp-for="Observaciones" class="form-control" rows="2" placeholder="Ej: Justificante médico"></textarea>
+                </div>
+
+                <div class="text-end">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-danger px-4">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('selGrupo').addEventListener('change', function() {
+            const grupoId = this.value;
+            const selAlumno = document.getElementById('selAlumno');
+            
+            if (!grupoId) {
+                selAlumno.disabled = true;
+                return;
+            }
+
+            fetch(`/Asistencia/GetAlumnosPorGrupo?grupoId=${grupoId}`)
+                .then(res => res.json())
+                .then(data => {
+                    selAlumno.innerHTML = '<option value="">-- Seleccionar Alumno --</option>';
+                    data.forEach(item => {
+                        selAlumno.innerHTML += `<option value="${item.value}">${item.text}</option>`;
+                    });
+                    selAlumno.disabled = false;
+                });
+        });
+    </script>
+}

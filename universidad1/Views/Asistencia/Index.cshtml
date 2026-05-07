@@ -1,53 +1,35 @@
 ﻿@model List<universidad1.Models.Asistencia>
 
-@{
-    ViewData["Title"] = "Registro de Asistencia";
-}
-
 <div class="container mt-4">
-    <h2>Control de Asistencia</h2>
-    <hr />
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Control de Asistencia General</h2>
+        <a asp-action="Create" class="btn btn-danger">Pasar Lista</a>
+    </div>
 
-    <table class="table table-bordered table-hover align-middle shadow-sm">
+    <table class="table table-hover shadow-sm bg-white">
         <thead class="table-dark">
             <tr>
                 <th>Fecha</th>
                 <th>Alumno</th>
-                <th>Grupo</th>
-                <th class="text-center">Estado</th>
+                <th>Materia (Grupo)</th>
+                <th>Estado</th>
                 <th>Observaciones</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model == null || Model.Count == 0)
+            @foreach (var item in Model)
             {
-                <tr><td colspan="5" class="text-center">No hay registros de asistencia.</td></tr>
-            }
-            else
-            {
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
-                        <td><strong>@item.NombreAlumno</strong></td>
-                        <td><span class="badge bg-secondary">@item.ClaveGrupo</span></td>
-                        <td class="text-center">
-                            @if (item.Estado == "Presente")
-                            {
-                                <span class="badge bg-success w-75">@item.Estado</span>
-                            }
-                            else if (item.Estado == "Retardo")
-                            {
-                                <span class="badge bg-warning text-dark w-75">@item.Estado</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger w-75">@item.Estado</span>
-                            }
-                        </td>
-                        <td class="text-muted small">@item.Observaciones</td>
-                    </tr>
-                }
+                <tr>
+                    <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                    <td><strong>@item.NombreAlumno</strong></td>
+                    <td>@item.NombreMateria (@item.ClaveGrupo)</td>
+                    <td>
+                        <span class="badge @(item.Estado == "Presente" ? "bg-success" : (item.Estado == "Ausente" ? "bg-danger" : "bg-warning"))">
+                            @item.Estado
+                        </span>
+                    </td>
+                    <td><small class="text-muted">@item.Observaciones</small></td>
+                </tr>
             }
         </tbody>
     </table>
