@@ -88,5 +88,125 @@ namespace universidad1.Controllers
             // Después de guardar exitosamente, lo redirigimos a la tabla principal (Index)
             return RedirectToAction("Index");
         }
+        // 1. GET: Alumnos/Edit/5 (Busca al alumno con un WHERE y muestra sus datos en el formulario)
+        public IActionResult Edit(int id)
+        {
+            Alumno alumnoEncontrado = new Alumno();
+
+            using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
+            {
+                conexion.Open();
+                // Query con WHERE para filtrar la búsqueda (Requisito del proyecto)[cite: 1]
+                string query = "SELECT id, matricula, nombre, apellido_paterno, apellido_materno, correo FROM alumnos WHERE id = @id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            alumnoEncontrado.Id = reader.GetInt32("id");
+                            alumnoEncontrado.Matricula = reader.GetString("matricula");
+                            alumnoEncontrado.Nombre = reader.GetString("nombre");
+                            alumnoEncontrado.ApellidoPaterno = reader.GetString("apellido_paterno");
+                            // Validación por si el materno es nulo
+                            alumnoEncontrado.ApellidoMaterno = reader.IsDBNull(reader.GetOrdinal("apellido_materno")) ? null : reader.GetString("apellido_materno");
+                            alumnoEncontrado.Correo = reader.GetString("correo");
+                        }
+                    }
+                }
+            }
+
+            return View(alumnoEncontrado);
+        }
+
+        // 2. POST: Alumnos/Edit/5 (Recibe los datos modificados y hace el UPDATE en MySQL)[cite: 1]
+        [HttpPost]
+        public IActionResult Edit(Alumno alumno)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
+            {
+                conexion.Open();
+                // Query documentable para la acción de Actualizar[cite: 1]
+                string query = "UPDATE alumnos SET matricula=@matricula, nombre=@nombre, apellido_paterno=@paterno, apellido_materno=@materno, correo=@correo WHERE id=@id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@id", alumno.Id);
+                    cmd.Parameters.AddWithValue("@matricula", alumno.Matricula);
+                    cmd.Parameters.AddWithValue("@nombre", alumno.Nombre);
+                    cmd.Parameters.AddWithValue("@paterno", alumno.ApellidoPaterno);
+
+                    if (string.IsNullOrEmpty(alumno.ApellidoMaterno))
+                    {
+                        cmd.Parameters.AddWithValue("@materno", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@materno", alumno.ApellidoMaterno);
+                    }
+
+                    cmd.Parameters.AddWithValue("@correo", alumno.Correo);
+
+                    cmd.ExecuteNonQuery(); // Ejecuta el UPDATE
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+        // 1. GET: Alumnos/Delete/5 (Muestra la pantalla de confirmación)
+        public IActionResult Delete(int id)
+        {
+            Alumno alumnoEncontrado = new Alumno();
+
+            using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
+            {
+                conexion.Open();
+                // Usamos WHERE para buscar al alumno que queremos borrar
+                string query = "SELECT id, matricula, nombre, apellido_paterno, apellido_materno, correo FROM alumnos WHERE id = @id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            alumnoEncontrado.Id = reader.GetInt32("id");
+                            alumnoEncontrado.Matricula = reader.GetString("matricula");
+                            alumnoEncontrado.Nombre = reader.GetString("nombre");
+                            alumnoEncontrado.ApellidoPaterno = reader.GetString("apellido_paterno");
+                            alumnoEncontrado.ApellidoMaterno = reader.IsDBNull(reader.GetOrdinal("apellido_materno")) ? null : reader.GetString("apellido_materno");
+                            alumnoEncontrado.Correo = reader.GetString("correo");
+                        }
+                    }
+                }
+            }
+
+            return View(alumnoEncontrado);
+        }
+
+        // 2. POST: Alumnos/Delete/5 (Ejecuta el borrado real en MySQL)
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
+            {
+                conexion.Open();
+                // Query documentable para la acción de Eliminar
+                string query = "DELETE FROM alumnos WHERE id = @id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery(); // Ejecuta el DELETE
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

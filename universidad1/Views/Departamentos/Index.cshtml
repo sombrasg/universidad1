@@ -1,0 +1,47 @@
+﻿@model List<universidad1.Models.Departamento>
+
+@{
+    ViewData["Title"] = "Directorio de Departamentos";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Departamentos Administrativos</h2>
+    <hr />
+
+    <div class="row">
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="col-12 text-center">
+                <p class="alert alert-warning">No se encontraron datos en la tabla departamentos.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var dep in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0 border-top border-4 border-primary">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary mb-3">@dep.NombreDepartamento</h5>
+                            
+                            <p class="card-text mb-2">
+                                <span class="text-muted small uppercase d-block">Responsable</span>
+                                <strong>@dep.NombreResponsable</strong>
+                            </p>
+                            
+                            <p class="card-text mb-2">
+                                <span class="text-muted small uppercase d-block">Ubicación</span>
+                                <span>@dep.Ubicacion</span>
+                            </p>
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="text-muted small">Extensión:</span>
+                                <span class="badge bg-info text-dark">#@dep.ExtensionTelefonica</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

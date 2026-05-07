@@ -1,0 +1,41 @@
+﻿@model List<universidad1.Models.Profesor>
+
+@{
+    ViewData["Title"] = "Plantilla Docente";
+}
+
+<div class="container mt-4">
+    <h2>Directorio de Profesores</h2>
+    <hr />
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>No. Empleado</th>
+                <th>Nombre Completo</th>
+                <th>Especialidad</th>
+                <th class="text-info">Departamento (JOIN)</th>
+                <th>Correo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr><td colspan="5" class="text-center">No hay profesores registrados.</td></tr>
+            }
+            else
+            {
+                @foreach (var prof in Model)
+                {
+                    <tr>
+                        <td>@prof.NumeroEmpleado</td>
+                        <td>@prof.Nombre @prof.ApellidoPaterno @prof.ApellidoMaterno</td>
+                        <td>@prof.Especialidad</td>
+                        <td><strong>@prof.NombreDepartamento</strong></td>
+                        <td>@prof.Correo</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

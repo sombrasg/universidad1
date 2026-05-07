@@ -1,0 +1,50 @@
+﻿@model List<universidad1.Models.Aula>
+
+@{
+    ViewData["Title"] = "Catálogo de Aulas";
+}
+
+<div class="container mt-4">
+    <h2>Aulas y Laboratorios</h2>
+    <hr />
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th class="text-info">Código de Aula</th>
+                <th>Edificio</th>
+                <th>Capacidad (Alumnos)</th>
+                <th>Tipo de Instalación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr><td colspan="5" class="text-center">No hay aulas registradas.</td></tr>
+            }
+            else
+            {
+                @foreach (var aula in Model)
+                {
+                    <tr>
+                        <td>@aula.Id</td>
+                        <td><strong>@aula.CodigoAula</strong></td>
+                        <td>@aula.Edificio</td>
+                        <td>@aula.Capacidad</td>
+                        <td>
+                            @if (aula.TipoAula != null && aula.TipoAula.Contains("Laboratorio"))
+                            {
+                                <span class="badge bg-primary">@aula.TipoAula</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@aula.TipoAula</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
