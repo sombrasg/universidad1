@@ -1,0 +1,101 @@
+﻿@model universidad1.Models.BecaAcademica
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="bi bi-mortarboard-fill"></i> Asignación de Beca Académica</h4>
+        </div>
+        <div class="card-body bg-light">
+            <form asp-action="Create" method="post" id="formBeca">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Seleccionar Alumno</label>
+                        <select asp-for="AlumnoId" id="selectAlumno" asp-items="ViewBag.Alumnos" class="form-select border-primary" required>
+                            <option value="">-- Seleccionar --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Estatus Académico</label>
+                        <div id="statusAcademico" class="alert alert-secondary py-2 mb-0">Seleccione un alumno para verificar...</div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Nombre de la Beca</label>
+                        <input asp-for="NombreBeca" id="txtNombreBeca" class="form-control" readonly required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Porcentaje (%)</label>
+                        <input asp-for="PorcentajeDescuento" id="txtPorcentaje" type="number" class="form-control" readonly required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Periodo</label>
+                        <select asp-for="PeriodoId" asp-items="ViewBag.Periodos" class="form-select" required></select>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="EstatusActiva" value="true" />
+
+                <div class="text-end mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" id="btnGuardar" class="btn btn-success px-4" disabled>Asignar Beca</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('selectAlumno').addEventListener('change', function() {
+            const alumnoId = this.value;
+            const statusDiv = document.getElementById('statusAcademico');
+            const btn = document.getElementById('btnGuardar');
+            const txtBeca = document.getElementById('txtNombreBeca');
+            const txtPor = document.getElementById('txtPorcentaje');
+
+            if (!alumnoId) return;
+
+            // Llamada AJAX al controlador
+            fetch(`/Becas/GetPromedioAlumno?id=${alumnoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const prom = data.promedio;
+                    let mensaje = "";
+                    let clase = "";
+                    let eligible = false;
+
+                    if (prom >= 9.5) {
+                        mensaje = `Promedio: ${prom.toFixed(2)} - ¡Elegible para Beca Excelencia!`;
+                        clase = "alert-success";
+                        txtBeca.value = "Beca de Excelencia";
+                        txtPor.value = 100;
+                        eligible = true;
+                    } else if (prom >= 9.0) {
+                        mensaje = `Promedio: ${prom.toFixed(2)} - Elegible para Beta Académica Superior`;
+                        clase = "alert-info";
+                        txtBeca.value = "Beca Académica";
+                        txtPor.value = 50;
+                        eligible = true;
+                    } else if (prom >= 8.5) {
+                        mensaje = `Promedio: ${prom.toFixed(2)} - Elegible para Apoyo Regular`;
+                        clase = "alert-warning";
+                        txtBeca.value = "Apoyo Regular";
+                        txtPor.value = 25;
+                        eligible = true;
+                    } else {
+                        mensaje = `Promedio: ${prom.toFixed(2)} - No cumple con el promedio mínimo (8.5)`;
+                        clase = "alert-danger";
+                        txtBeca.value = "";
+                        txtPor.value = 0;
+                        eligible = false;
+                    }
+
+                    statusDiv.innerHTML = `<strong>${mensaje}</strong>`;
+                    statusDiv.className = `alert ${clase} py-2 mb-0`;
+                    btn.disabled = !eligible;
+                });
+        });
+    </script>
+}

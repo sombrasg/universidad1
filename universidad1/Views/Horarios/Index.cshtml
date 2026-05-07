@@ -1,119 +1,33 @@
 ﻿@model List<universidad1.Models.Horario>
 
-@{
-    ViewData["Title"] = "Horarios de Clases";
-}
-
 <div class="container mt-4">
-    <h2>Horarios Asignados</h2>
+    <h2>Horarios de Clases</h2>
     <hr />
+    <div class="text-end mb-3">
+        <a asp-action="Create" class="btn btn-success">Asignar Horario</a>
+    </div>
 
-    <table class="table table-striped table-hover align-middle">
+    <table class="table table-bordered table-hover shadow-sm">
         <thead class="table-dark">
             <tr>
                 <th>Grupo</th>
-                <th class="text-info">Materia</th>
-                <th class="text-warning">Profesor</th>
-                <th class="text-center">Horario</th>
+                <th>Día</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+                <th>Aula</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model == null || Model.Count == 0)
+            @foreach (var h in Model)
             {
-                <tr><td colspan="4" class="text-center">No hay horarios registrados.</td></tr>
-            }
-            else
-            {
-                foreach (var horario in Model)
-                {
-                    <tr>
-                        <td><strong>@horario.ClaveGrupo</strong></td>
-                        <td>@horario.NombreMateria</td>
-                        <td>@horario.NombreProfesor</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalHorario-@horario.GrupoId">
-                                Ver Horario
-                            </button>
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td><strong>@h.ClaveGrupo</strong></td>
+                    <td>@h.DiaSemana</td>
+                    <td>@h.HoraInicio.ToString(@"hh\:mm")</td>
+                    <td>@h.HoraFin.ToString(@"hh\:mm")</td>
+                    <td><span class="badge bg-info text-dark">@h.CodigoAula</span></td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
-
-@if (Model != null)
-{
-    foreach (var horario in Model)
-    {
-        // Al estar ya dentro de un foreach, usamos C# directo sin necesidad de poner "@" otra vez
-        var diasSemana = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes" };
-        var horarioSemana = new Dictionary<string, string>();
-        
-        foreach (var dia in diasSemana)
-        {
-            horarioSemana[dia] = "-";
-        }
-
-        if (!string.IsNullOrEmpty(horario.DiasYHoras) && horario.DiasYHoras != "Sin asignar")
-        {
-            var asignaciones = horario.DiasYHoras.Split('|');
-            foreach (var asig in asignaciones)
-            {
-                foreach (var dia in diasSemana)
-                {
-                    if (asig.StartsWith(dia))
-                    {
-                        horarioSemana[dia] = asig.Replace(dia, "").Trim();
-                    }
-                }
-            }
-        }
-
-        <div class="modal fade" id="modalHorario-@horario.GrupoId" tabindex="-1" aria-labelledby="modalLabel-@horario.GrupoId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-white">
-                        <h5 class="modal-title" id="modalLabel-@horario.GrupoId">Horario: @horario.NombreMateria</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h6 class="text-muted mb-3">
-                            <strong>Profesor:</strong> @horario.NombreProfesor <br />
-                            <strong>Grupo:</strong> @horario.ClaveGrupo
-                        </h6>
-                        <hr />
-                        <h6 class="fw-bold text-primary mb-3">Distribución semanal:</h6>
-                        
-                        <div class="table-responsive">
-                            <table class="table table-bordered text-center align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Lunes</th>
-                                        <th>Martes</th>
-                                        <th>Miércoles</th>
-                                        <th>Jueves</th>
-                                        <th>Viernes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>@horarioSemana["Lunes"]</td>
-                                        <td>@horarioSemana["Martes"]</td>
-                                        <td>@horarioSemana["Miércoles"]</td>
-                                        <td>@horarioSemana["Jueves"]</td>
-                                        <td>@horarioSemana["Viernes"]</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-}

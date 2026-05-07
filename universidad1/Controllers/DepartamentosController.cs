@@ -13,6 +13,7 @@ namespace universidad1.Controllers
             _cadenaConexion = cadenaConexion;
         }
 
+        // GET: Departamentos (Muestra la lista)
         public IActionResult Index()
         {
             List<Departamento> lista = new List<Departamento>();
@@ -20,7 +21,6 @@ namespace universidad1.Controllers
             using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
             {
                 conexion.Open();
-                // Ahora pedimos las 5 columnas que ya tienes en MySQL
                 string query = "SELECT id, nombre_departamento, extension_telefonica, nombre_responsable, ubicacion FROM departamentos";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conexion))
@@ -42,6 +42,37 @@ namespace universidad1.Controllers
                 }
             }
             return View(lista);
+        }
+
+        // --- INICIA PROCEDIMIENTO PARA GUARDAR NUEVO DEPARTAMENTO ---
+
+        // 1. GET: Departamentos/Create (Muestra el formulario vacío)
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // 2. POST: Departamentos/Create (Guarda en MySQL)
+        [HttpPost]
+        public IActionResult Create(Departamento departamento)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(_cadenaConexion))
+            {
+                conexion.Open();
+                string query = @"INSERT INTO departamentos (nombre_departamento, extension_telefonica, nombre_responsable, ubicacion) 
+                                 VALUES (@nombre, @extension, @responsable, @ubicacion)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", departamento.NombreDepartamento);
+                    cmd.Parameters.AddWithValue("@extension", departamento.ExtensionTelefonica);
+                    cmd.Parameters.AddWithValue("@responsable", departamento.NombreResponsable);
+                    cmd.Parameters.AddWithValue("@ubicacion", departamento.Ubicacion);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }

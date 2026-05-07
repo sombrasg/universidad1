@@ -1,0 +1,46 @@
+﻿@model universidad1.Models.Grupo
+
+<div class="container mt-4">
+    <h2>Abrir Nuevo Grupo</h2>
+    <hr />
+    <form asp-action="Create" method="post" class="shadow-sm p-4 border rounded bg-light">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Clave del Grupo</label>
+                <input asp-for="ClaveGrupo" class="form-control" required placeholder="Ej: G-PROG1" />
+            </div>
+            <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">Periodo Académico</label>
+                <select asp-for="PeriodoId" class="form-select" asp-items="ViewBag.Periodos" required>
+                    <option value="">-- Seleccione Periodo --</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label class="form-label fw-bold">Materia a Impartir</label>
+                <select asp-for="MateriaId" class="form-select" asp-items="ViewBag.Materias" required>
+                    <option value="">-- Seleccione Materia --</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Profesor Titular</label>
+                <select asp-for="ProfesorId" class="form-select" asp-items="ViewBag.Profesores" required>
+                    <option value="">-- Seleccione Profesor --</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Aula Asignada</label>
+                <select asp-for="AulaId" class="form-select" asp-items="ViewBag.Aulas" required>
+                    <option value="">-- Seleccione Instalación --</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt-3 text-end">
+            <a asp-action="Index" class="btn btn-secondary me-2">Cancelar</a>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Guardar Grupo</button>
+        </div>
+    </form>
+</div>

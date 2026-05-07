@@ -3,8 +3,11 @@
     public class Inscripcion
     {
         public int Id { get; set; }
+        public int AlumnoId { get; set; }
+        public int CarreraId { get; set; }
+        public int PeriodoId { get; set; }
 
-        // Variables para guardar los nombres reales gracias a los JOINs
+        public string? Matricula { get; set; }
         public string? NombreAlumno { get; set; }
         public string? NombreCarrera { get; set; }
         public string? ClavePeriodo { get; set; }

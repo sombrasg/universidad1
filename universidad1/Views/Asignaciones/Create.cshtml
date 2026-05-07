@@ -1,0 +1,34 @@
+﻿@model universidad1.Models.AsignacionAlumnoGrupo
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-indigo text-white" style="background-color: #6610f2;">
+            <h4 class="mb-0">Asignar Alumno a Grupo</h4>
+        </div>
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Estudiante</label>
+                        <select asp-for="AlumnoId" asp-items="ViewBag.Alumnos" class="form-select border-indigo" required>
+                            <option value="">-- Seleccione Alumno --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Grupo de Clase</label>
+                        <select asp-for="GrupoId" asp-items="ViewBag.Grupos" class="form-select border-indigo" required>
+                            <option value="">-- Seleccione Grupo --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-end mt-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary">Volver al Listado</a>
+                    <button type="submit" class="btn btn-primary px-5">Confirmar Asignación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

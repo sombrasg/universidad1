@@ -8,7 +8,13 @@
     <h2>Directorio de Profesores</h2>
     <hr />
 
-    <table class="table table-striped table-hover">
+    <div class="mb-3 mt-3 text-end">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-person-plus-fill"></i> Registrar Nuevo Profesor
+        </a>
+    </div>
+
+    <table class="table table-striped table-hover align-middle shadow-sm">
         <thead class="table-dark">
             <tr>
                 <th>No. Empleado</th>
@@ -16,23 +22,29 @@
                 <th>Especialidad</th>
                 <th class="text-info">Departamento (JOIN)</th>
                 <th>Correo</th>
+                <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
             @if (Model == null || !Model.Any())
             {
-                <tr><td colspan="5" class="text-center">No hay profesores registrados.</td></tr>
+                <tr><td colspan="6" class="text-center text-muted">No hay profesores registrados.</td></tr>
             }
             else
             {
                 @foreach (var prof in Model)
                 {
                     <tr>
-                        <td>@prof.NumeroEmpleado</td>
+                        <td><span class="badge bg-secondary">@prof.NumeroEmpleado</span></td>
                         <td>@prof.Nombre @prof.ApellidoPaterno @prof.ApellidoMaterno</td>
                         <td>@prof.Especialidad</td>
                         <td><strong>@prof.NombreDepartamento</strong></td>
                         <td>@prof.Correo</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@prof.Id" class="btn btn-sm btn-warning shadow-sm">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+                        </td>
                     </tr>
                 }
             }
