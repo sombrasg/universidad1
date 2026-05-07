@@ -1,8 +1,125 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Panel de Control - Easyvard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm p-4" style="background: linear-gradient(to right, #0d47a1, #1976d2); color: white; border-radius: 15px;">
+            <h1 class="display-5 fw-bold">Bienvenido a Easyvard</h1>
+            <p class="lead mb-0">Sistema de Gestión Integral Universitaria | Ciclo Escolar 2026</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 p-3" style="border-left: 5px solid #0d47a1 !important; border-radius: 10px;">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 bg-light p-3 rounded">
+                    <i class="bi bi-people-fill fs-2 text-primary"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="text-muted mb-1 small uppercase">Total Alumnos</h6>
+                    <h4 class="fw-bold mb-0">1,452</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 p-3" style="border-left: 5px solid #2e7d32 !important; border-radius: 10px;">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 bg-light p-3 rounded">
+                    <i class="bi bi-cash-coin fs-2 text-success"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="text-muted mb-1 small uppercase">Caja Mensual</h6>
+                    <h4 class="fw-bold mb-0">$84,200</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 p-3" style="border-left: 5px solid #f9a825 !important; border-radius: 10px;">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 bg-light p-3 rounded">
+                    <i class="bi bi-mortarboard-fill fs-2 text-warning"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="text-muted mb-1 small uppercase">Carreras</h6>
+                    <h4 class="fw-bold mb-0">12</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 p-3" style="border-left: 5px solid #d32f2f !important; border-radius: 10px;">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 bg-light p-3 rounded">
+                    <i class="bi bi-building fs-2 text-danger"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="text-muted mb-1 small uppercase">Grupos Activos</h6>
+                    <h4 class="fw-bold mb-0">38</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mb-4">
+        <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 15px;">
+            <h5 class="fw-bold mb-4"><i class="bi bi-lightning-charge me-2 text-primary"></i>Inscripciones Recientes</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Carrera</th>
+                            <th>Fecha</th>
+                            <th>Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>Sistemas</td>
+                            <td>Hoy</td>
+                            <td><span class="badge bg-success">Completado</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ana García</td>
+                            <td>Derecho</td>
+                            <td>Ayer</td>
+                            <td><span class="badge bg-warning text-dark">Pendiente</span></td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Ruiz</td>
+                            <td>Diseño</td>
+                            <td>05/05/26</td>
+                            <td><span class="badge bg-success">Completado</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 15px; background-color: #fff;">
+            <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-megaphone me-2 text-primary"></i>Avisos Easyvard</h5>
+            <div class="alert alert-info border-0 shadow-sm mb-3">
+                <small class="d-block fw-bold">Cierre de Actas</small>
+                Faltan 3 días para el cierre de calificaciones del primer parcial.
+            </div>
+            <div class="alert alert-light border-0 shadow-sm mb-3">
+                <small class="d-block fw-bold text-success">Mantenimiento</small>
+                El laboratorio de cómputo B estará en mantenimiento este sábado.
+            </div>
+            <button class="btn btn-outline-primary btn-sm w-100 mt-2">Ver todos los avisos</button>
+        </div>
+    </div>
 </div>
