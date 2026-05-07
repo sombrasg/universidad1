@@ -1,7 +1,7 @@
 ﻿@model universidad1.Models.Alumno
 
 @{
-    ViewData["Title"] = "Registrar Alumno";
+    ViewData["Title"] = "Registrar Nuevo Alumno";
 }
 
 <div class="container mt-4">
@@ -9,7 +9,7 @@
     <hr />
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <form asp-action="Create" method="post">
                 
                 <div class="mb-3">
@@ -17,30 +17,47 @@
                     <input asp-for="Matricula" class="form-control" required />
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Nombre(s)</label>
-                    <input asp-for="Nombre" class="form-control" required />
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Nombre(s)</label>
+                        <input asp-for="Nombre" class="form-control" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Apellido Paterno</label>
+                        <input asp-for="ApellidoPaterno" class="form-control" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Apellido Materno</label>
+                        <input asp-for="ApellidoMaterno" class="form-control" />
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Apellido Paterno</label>
-                    <input asp-for="ApellidoPaterno" class="form-control" required />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Apellido Materno</label>
-                    <input asp-for="ApellidoMaterno" class="form-control" />
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha de Nacimiento</label>
+                        <input asp-for="FechaNacimiento" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input asp-for="Telefono" type="tel" class="form-control" placeholder="Ej: 624-123-4567" />
+                    </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Correo Electrónico</label>
-                    <input asp-for="Correo" type="email" class="form-control" required />
+                    <input asp-for="Correo" type="email" class="form-control" />
                 </div>
 
-                <button type="submit" class="btn btn-primary">Guardar Alumno</button>
-                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                <div class="mb-3">
+                    <label class="form-label">Dirección Completa</label>
+                    <textarea asp-for="Direccion" class="form-control" rows="2" placeholder="Calle, Número, Colonia..."></textarea>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Guardar Alumno</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
             </form>
         </div>
     </div>
-</div>
 </div>

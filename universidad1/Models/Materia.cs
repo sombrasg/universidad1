@@ -9,6 +9,7 @@
         public int HorasTeoricas { get; set; }
         public int HorasPracticas { get; set; }
         public int SemestreSugerido { get; set; }
+        public int CarreraId { get; set; } // <--- Asegúrate de tener esta
         public string? NombreCarrera { get; set; }
     }
 }
