@@ -1,0 +1,29 @@
+﻿@model universidad1.Models.Alumno
+
+@{
+    ViewData["Title"] = "Eliminar Alumno";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger">Eliminar Alumno</h2>
+    <hr />
+    
+    <div class="alert alert-warning">
+        <h4>¿Estás seguro de que deseas eliminar este registro?</h4>
+        <p>Esta acción no se puede deshacer y los datos se borrarán permanentemente de la base de datos.</p>
+    </div>
+
+    <div class="card" style="width: 25rem;">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Nombre @Model.ApellidoPaterno</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Matrícula: @Model.Matricula</h6>
+            <p class="card-text"><strong>Correo:</strong> @Model.Correo</p>
+            
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Sí, Eliminar Permanentemente</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>S

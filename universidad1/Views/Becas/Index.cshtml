@@ -1,0 +1,54 @@
+﻿@model List<universidad1.Models.Beca>
+
+@{
+    ViewData["Title"] = "Gestión de Becas";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Becas Académicas Otorgadas</h2>
+    <hr />
+
+    <table class="table table-hover shadow-sm align-middle">
+        <thead class="table-primary">
+            <tr>
+                <th>Folio</th>
+                <th>Alumno</th>
+                <th>Tipo de Beca</th>
+                <th class="text-center">Descuento</th>
+                <th>Periodo</th>
+                <th class="text-center">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count == 0)
+            {
+                <tr><td colspan="6" class="text-center text-muted">No hay becas registradas en este ciclo.</td></tr>
+            }
+            else
+            {
+                @foreach (var beca in Model)
+                {
+                    <tr>
+                        <td>@beca.Id</td>
+                        <td><strong>@beca.NombreAlumno</strong></td>
+                        <td>@beca.NombreBeca</td>
+                        <td class="text-center">
+                            <span class="badge bg-warning text-dark fs-6">@beca.PorcentajeDescuento%</span>
+                        </td>
+                        <td>@beca.ClavePeriodo</td>
+                        <td class="text-center">
+                            @if (beca.EstatusActiva)
+                            {
+                                <span class="badge rounded-pill bg-success">Activa</span>
+                            }
+                            else
+                            {
+                                <span class="badge rounded-pill bg-danger">Inactiva</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

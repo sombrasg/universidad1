@@ -1,0 +1,47 @@
+﻿@model universidad1.Models.Alumno
+
+@{
+    ViewData["Title"] = "Editar Alumno";
+}
+
+<div class="container mt-4">
+    <h2>Editar Información del Alumno</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                <!-- Este campo oculto es crucial para que el UPDATE sepa a quién modificar -->
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="mb-3">
+                    <label class="form-label">Matrícula</label>
+                    <input asp-for="Matricula" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre(s)</label>
+                    <input asp-for="Nombre" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Apellido Paterno</label>
+                    <input asp-for="ApellidoPaterno" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Apellido Materno</label>
+                    <input asp-for="ApellidoMaterno" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input asp-for="Correo" type="email" class="form-control" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

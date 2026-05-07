@@ -1,0 +1,41 @@
+﻿@model List<universidad1.Models.Grupo>
+
+@{
+    ViewData["Title"] = "Gestión de Grupos";
+}
+
+<div class="container mt-4">
+    <h2>Grupos Activos</h2>
+    <hr />
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Clave del Grupo</th>
+                <th class="text-info">Materia</th>
+                <th class="text-warning">Profesor</th>
+                <th class="text-success">Aula</th>
+                <th>Periodo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr><td colspan="5" class="text-center">No hay grupos registrados.</td></tr>
+            }
+            else
+            {
+                @foreach (var grupo in Model)
+                {
+                    <tr>
+                        <td><strong>@grupo.ClaveGrupo</strong></td>
+                        <td>@grupo.NombreMateria</td>
+                        <td>@grupo.NombreProfesor</td>
+                        <td>@grupo.Aula</td>
+                        <td><span class="badge bg-primary">@grupo.Periodo</span></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

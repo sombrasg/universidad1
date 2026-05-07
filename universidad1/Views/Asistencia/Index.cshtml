@@ -1,0 +1,54 @@
+﻿@model List<universidad1.Models.Asistencia>
+
+@{
+    ViewData["Title"] = "Registro de Asistencia";
+}
+
+<div class="container mt-4">
+    <h2>Control de Asistencia</h2>
+    <hr />
+
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Fecha</th>
+                <th>Alumno</th>
+                <th>Grupo</th>
+                <th class="text-center">Estado</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count == 0)
+            {
+                <tr><td colspan="5" class="text-center">No hay registros de asistencia.</td></tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td><strong>@item.NombreAlumno</strong></td>
+                        <td><span class="badge bg-secondary">@item.ClaveGrupo</span></td>
+                        <td class="text-center">
+                            @if (item.Estado == "Presente")
+                            {
+                                <span class="badge bg-success w-75">@item.Estado</span>
+                            }
+                            else if (item.Estado == "Retardo")
+                            {
+                                <span class="badge bg-warning text-dark w-75">@item.Estado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger w-75">@item.Estado</span>
+                            }
+                        </td>
+                        <td class="text-muted small">@item.Observaciones</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
